@@ -316,12 +316,6 @@ Use escalate_to_ceo_over_ui_color."
 
 ### 🎭 More Scenarios to Try
 
-**Classic Karen Moments**:
-- Speak to a manager about slow Wi-Fi
-- Write a 1-star review for a slightly wrong order
-- Demand refund for free open-source software
-- Record terrible service for your TikTok followers
-
 **PM Greatest Hits**:
 - Schedule a 2-hour meeting about footer text
 - Request hourly updates on a database migration
