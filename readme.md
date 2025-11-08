@@ -86,6 +86,21 @@ These tools capture every developer's worst PM experiences:
     - *Reality: Incompatible systems from different decades*
     - *Teaching: Complex parameter relationships*
 
+11. **`generate_sarcastic_status_update`** 
+    - "Everything is going EXACTLY as planned... if your plan was chaos!"
+    - *Reality: Pretending disasters are 'minor bumps in the road'*
+    - *Teaching: Dynamic content generation with sarcasm*
+
+12. **`random_feature_request`** 
+    - "Change ALL fonts to Comic Sans! Add blockchain to the login page!"
+    - *Reality: Completely absurd ideas disguised as innovation*
+    - *Teaching: Random generation and creative AI responses*
+
+13. **`generate_pm_meme`** 🎨 **NEW!**
+    - "Drake meme: Reject 'Testing' ❌, Accept 'Ship broken code' ✅"
+    - *Reality: Capture PM behavior in perfect meme format using Imgflip API*
+    - *Teaching: External API integration and image generation*
+
 ## 🚀 Quick Start (Your MCP Learning Journey!)
 
 ### What You Need (Prerequisites)
@@ -100,19 +115,67 @@ These tools capture every developer's worst PM experiences:
 
 #### Step 1: Build Your First MCP Server! 🏗️
 
+**Using Makefile (Recommended - Docker-First Workflow)**
 ```bash
 cd karen-mcp-server
-docker build -t karen-mcp-server .
+
+# See all available commands
+make help
+
+# Build the Docker image
+make build
+
+# Run tests to verify everything works
+make test
+
+# Run all validation checks
+make all
+```
+
+**Manual Docker Build (Alternative)**
+```bash
+cd karen-mcp-server
+docker build -t karen-mcp-server:latest .
+docker run --rm karen-mcp-server:latest python test_karen_server.py
 ```
 
 **💡 What's Happening Here?**
 - Docker packages your MCP server into a portable container
-- The `Dockerfile` defines the environment and dependencies
+- The `Dockerfile` defines the environment (Python 3.11) and dependencies
+- Tests run inside Docker to ensure everything works
 - This creates an image called `karen-mcp-server:latest`
 - **MCP Concept**: Servers can run anywhere Docker runs!
 
+**📝 Local Development Note:**
+- This project requires Python 3.11+ (for FastMCP compatibility)
+- If you have Python 3.9 or older, use Docker (recommended)
+- The Makefile now uses Docker for all operations (build, test, run, validate)
+- No local Python setup needed - Docker handles everything!
+
 #### Step 2: Set Up AI Integration (Optional) 🤖
 
+**Option A: Using .env File (Best for Testing & Learning)**
+```bash
+# Copy the example environment file
+cp .env.example .env
+
+# Edit .env and add your API keys
+nano .env  # or use any text editor
+
+# Your .env should look like:
+# OPENAI_API_KEY=sk-your-key-here
+# OPENAI_MODEL=gpt-4o-mini
+# IMGFLIP_USERNAME=your-username
+# IMGFLIP_PASSWORD=your-password
+
+# Test with real APIs - automatically loads .env
+make test
+
+# Run server with .env - automatically loaded
+make run
+```
+
+**Option B: Using Docker Secrets (Best for Production)**
 ```bash
 # Store your OpenAI API key securely
 docker mcp secret set OPENAI_API_KEY="sk-your-api-key-here"
@@ -125,10 +188,12 @@ docker mcp secret list
 ```
 
 **💡 What's Happening Here?**
-- Secrets are stored securely by Docker (never in your code!)
+- `.env` files are perfect for local testing and development
+- Docker secrets are stored securely (never in your code!)
 - The server uses OpenAI to generate creative Karen responses
 - Without an API key, it uses pre-written fallback responses
 - **MCP Concept**: Servers can integrate with external APIs!
+- **Best Practice**: Use `.env` locally, Docker secrets in production
 
 #### Step 3: Register Your Server 📋
 
@@ -164,6 +229,9 @@ registry:
       - name: create_urgent_non_urgent_task
       - name: bypass_development_process
       - name: demand_impossible_integration
+      - name: generate_sarcastic_status_update
+      - name: random_feature_request
+      - name: generate_pm_meme
     
     secrets:
       - name: OPENAI_API_KEY
@@ -311,8 +379,22 @@ Use invoke_competitor_feature."
 "The login button needs to be #2E86AB instead of #2E86AC. 
 Use escalate_to_ceo_over_ui_color."
 ```
-💡 **What You'll Learn**: Handling trivial inputs dramatically
-📈 **What You'll See**: Escalation to the extreme
+
+**Scenario 6: Fake Status Report**
+```
+"The project is 3 weeks behind, over budget, and half the team quit. 
+Use generate_sarcastic_status_update to report to stakeholders."
+```
+
+**Scenario 7: Random Chaos Generator**
+```
+"We need a new feature idea. Use random_feature_request to generate something."
+```
+
+**Scenario 8: PM Meme Creation** 🎨
+```
+"Create a meme about demanding features with impossible deadlines using generate_pm_meme."
+```
 
 ### 🎭 More Scenarios to Try
 
@@ -322,6 +404,9 @@ Use escalate_to_ceo_over_ui_color."
 - Mark copyright year update as URGENT
 - Skip testing because "we don't have time for process"
 - Integrate a COBOL mainframe with an AI chatbot
+- Generate a status update pretending the disaster is fine
+- Get a random absurd feature suggestion
+- Create PM behavior memes (deadline chaos, competitor envy, process bypass)
 
 ### 🎓 Your Learning Journey
 
@@ -382,7 +467,7 @@ Use escalate_to_ceo_over_ui_color."
    - Example: `feature="user authentication"`, `deadline="tomorrow"`
    
 3. **Server** = Collection of related tools
-   - Example: Karen server has 16 tools
+   - Example: Karen PM server has 13 PM behavior tools
    
 4. **Protocol** = How AI and server communicate
    - MCP uses JSON-RPC over stdio
@@ -429,17 +514,53 @@ The server code is heavily commented to teach MCP concepts:
 
 ### 🧪 Test Locally
 
+**Using Makefile (Easy Mode!)**
+```bash
+# Install dependencies
+make install
+
+# Run all tests
+make test
+
+# Validate Python syntax
+make validate
+
+# Build and run everything
+make all
+```
+
+**Testing with Real API Keys** 🔑
+```bash
+# Copy the example environment file
+cp .env.example .env
+
+# Edit .env and add your API keys:
+# OPENAI_API_KEY=sk-your-key-here
+# IMGFLIP_USERNAME=your-username
+# IMGFLIP_PASSWORD=your-password
+
+# Run tests - automatically loads .env file
+make test
+
+# The Makefile detects .env and mounts it to Docker
+# You'll see real OpenAI and Imgflip API calls!
+```
+
+**Manual Testing (Advanced)**
 ```bash
 # Test without Claude (great for learning!)
 export OPENAI_API_KEY="your-key"
+
+# Run the test suite
+python3 test_karen_server.py
 
 # Send MCP protocol messages directly
 echo '{"jsonrpc":"2.0","method":"tools/list","id":1}' | \
   docker run -i --rm karen-mcp-server:latest
 
-# Test a specific tool
+# Test a specific tool with your .env file
 echo '{"jsonrpc":"2.0","method":"tools/call","params":{"name":"demand_feature_immediately","arguments":{"feature":"blockchain AI","deadline":"tomorrow"}},"id":2}' | \
-  docker run -i --rm -e OPENAI_API_KEY="$OPENAI_API_KEY" karen-mcp-server:latest
+  docker run -i --rm --env-file .env karen-mcp-server:latest
 ```
 
 **💡 What You're Learning**:
@@ -447,6 +568,9 @@ echo '{"jsonrpc":"2.0","method":"tools/call","params":{"name":"demand_feature_im
 - Tools are listed with `tools/list`
 - Tools are called with `tools/call`
 - Parameters go in the `arguments` object
+- Environment variables keep API keys secure
+- Automated testing catches issues early!
+- `.env` files work seamlessly with Docker!
 
 ### 🎨 Create Your Own Tool!
 

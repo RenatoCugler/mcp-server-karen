@@ -61,6 +61,24 @@ OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY", "")  # API key from Docker sec
 OPENAI_MODEL = os.environ.get("OPENAI_MODEL", "gpt-3.5-turbo")  # Which AI model to use
 API_TIMEOUT = 30  # Don't wait forever for OpenAI
 
+# Imgflip API credentials (optional - works without auth but has rate limits)
+IMGFLIP_USERNAME = os.environ.get("IMGFLIP_USERNAME", "")
+IMGFLIP_PASSWORD = os.environ.get("IMGFLIP_PASSWORD", "")
+
+# Popular meme templates perfect for PM Karen behavior
+PM_MEME_TEMPLATES = {
+    "distracted_boyfriend": "112126428",  # PM looking at competitor features
+    "drake": "181913649",  # Rejecting proper process, preferring shortcuts
+    "two_buttons": "87743020",  # Follow process vs ship broken feature
+    "is_this": "100947",  # Is this a simple 5-minute change?
+    "disaster_girl": "97984",  # PM watching codebase burn
+    "change_my_mind": "129242436",  # This is a simple feature
+    "this_is_fine": "55311130",  # Everything is on track (it's not)
+    "one_does_not_simply": "61579",  # One does not simply skip testing
+    "ancient_aliens": "101470",  # What if we just used AI?
+    "expanding_brain": "93895088",  # Evolution of terrible PM ideas
+}
+
 # 💡 LEARNING: NEVER hardcode secrets in your code!
 #    - Use environment variables (os.environ.get)
 #    - Docker MCP secrets become environment variables
@@ -107,6 +125,21 @@ FALLBACK_RESPONSES = {
         "Can't they just talk to each other?! It's all software, right?! Just make our COBOL mainframe work with this AI chatbot!",
         "How hard can integration be?! They're both computers! Just sync the data between 1970s and 2025 systems!",
         "Make it seamless! I don't understand why connecting incompatible architectures is complicated!"
+    ],
+    "generate_sarcastic_status_update": [
+        "Everything is going EXACTLY as planned... if your plan was chaos and missed deadlines!",
+        "We're definitely shipping Friday! According to the timeline that exists only in my dreams!",
+        "Progress is AMAZING! If we measure success by meetings held instead of features shipped!"
+    ],
+    "random_feature_request": [
+        "Change ALL fonts to Comic Sans! The client will LOVE it! It's professional!",
+        "Rebrand the entire project as 'Project Karen 2.0'! We need a FRESH start!",
+        "Add a dancing paperclip assistant! It worked for Microsoft in the 90s!"
+    ],
+    "generate_pm_meme": [
+        "🎨 Meme generation failed, but imagine a Drake meme: Top panel 'Following sprint planning' ❌, Bottom panel 'Demanding features by tomorrow' ✅",
+        "🎨 Picture this meme: Distracted Boyfriend looking at 'Competitor's Feature' while ignoring 'Technical Debt'",
+        "🎨 Imagine the 'This is Fine' meme but it's a PM saying 'Everything is on track' while the roadmap burns"
     ]
 }
 
@@ -435,6 +468,158 @@ async def demand_impossible_integration(service_a: str = "", service_b: str = ""
     else:
         fallback = get_fallback_response("demand_impossible_integration")
         return f"🔌💥 IMPOSSIBLE INTEGRATION DEMAND 💥🔌\n\n{fallback}\n\n🧩 *Treating incompatible systems like plug-and-play toys*"
+
+@mcp.tool()
+async def generate_sarcastic_status_update(project: str = "", actual_status: str = "") -> str:
+    """Generate fake/sarcastic status reports that say everything is fine when it's clearly not."""
+    logger.info(f"Executing generate_sarcastic_status_update for: {project}")
+    
+    if not project.strip():
+        project = "the critical launch project"
+    
+    if not actual_status.strip():
+        actual_status = "complete disaster with missed deadlines"
+    
+    system_prompt = """You are Karen as a PM writing sarcastic status updates that pretend everything is going perfectly 
+    when it's obviously a disaster. Use heavy sarcasm and phrases like "Everything is going exactly as planned...", 
+    "if your plan was chaos", "Definitely shipped by Friday", "according to the timeline that exists only in my dreams", 
+    "Progress is AMAZING!", "if we measure success by meetings held", "Right on track!", "for the wrong destination", 
+    "No blockers at all!", "except for all the blockers", and "Team morale is high!" (when everyone wants to quit). 
+    Make it obvious you're being sarcastic about the mess."""
+    
+    prompt = f"Write a sarcastic status update for '{project}' where the actual situation is '{actual_status}'"
+    
+    ai_response = await call_openai(prompt, system_prompt)
+    
+    if ai_response:
+        return f"📊😏 SARCASTIC STATUS UPDATE 😏📊\n\n{ai_response}\n\n🎭 *Reporting complete chaos as 'minor bumps in the road'*"
+    else:
+        fallback = get_fallback_response("generate_sarcastic_status_update")
+        return f"📊😏 SARCASTIC STATUS UPDATE 😏📊\n\n{fallback}\n\n🎭 *Reporting complete chaos as 'minor bumps in the road'*"
+
+@mcp.tool()
+async def random_feature_request() -> str:
+    """Generate completely absurd and random feature requests that make no sense."""
+    logger.info("Executing random_feature_request")
+    
+    system_prompt = """You are Karen as a PM generating completely random, absurd feature requests that make zero business sense. 
+    Think of things like "Change all fonts to Comic Sans", "Rebrand as Project Karen 2.0", "Add a dancing paperclip assistant", 
+    "Make the logo spin 360 degrees", "Add blockchain to the login page", "Replace all icons with emoji", 
+    "Make every button play a sound effect", "Add a chat feature to the 404 page", "Integrate with MySpace", 
+    "Auto-post to Friendster", etc. Be creative and ridiculous. Act like these ideas are brilliant and urgent."""
+    
+    prompt = "Generate one completely absurd, random feature request that makes no sense but act like it's genius"
+    
+    ai_response = await call_openai(prompt, system_prompt)
+    
+    if ai_response:
+        return f"🎲💡 RANDOM FEATURE REQUEST 💡🎲\n\n{ai_response}\n\n🤪 *Generating chaos disguised as 'innovation'*"
+    else:
+        fallback = get_fallback_response("random_feature_request")
+        return f"🎲💡 RANDOM FEATURE REQUEST 💡🎲\n\n{fallback}\n\n🤪 *Generating chaos disguised as 'innovation'*"
+
+@mcp.tool()
+async def generate_pm_meme(scenario: str = "", meme_type: str = "") -> str:
+    """Generate a Karen PM meme using Imgflip API that captures PM behavior perfectly."""
+    logger.info(f"Executing generate_pm_meme for scenario: {scenario}")
+    
+    if not scenario.strip():
+        scenario = "demanding features with impossible deadlines"
+    
+    # Map scenario keywords to appropriate meme templates and text
+    meme_configs = {
+        "deadline": {
+            "template_id": PM_MEME_TEMPLATES["drake"],
+            "text0": "Following realistic sprint planning",
+            "text1": "Promising features by tomorrow"
+        },
+        "competitor": {
+            "template_id": PM_MEME_TEMPLATES["distracted_boyfriend"],
+            "text0": "Our Technical Roadmap",
+            "text1": "PM",
+            "text2": "Competitor's Feature Screenshot"
+        },
+        "process": {
+            "template_id": PM_MEME_TEMPLATES["drake"],
+            "text0": "Testing and code review",
+            "text1": "Shipping untested code immediately"
+        },
+        "estimate": {
+            "template_id": PM_MEME_TEMPLATES["is_this"],
+            "text0": "Is this a simple 5-minute change?",
+            "text1": "Complex 3-sprint feature"
+        },
+        "fire": {
+            "template_id": PM_MEME_TEMPLATES["this_is_fine"],
+            "text0": "Everything is going",
+            "text1": "exactly as planned"
+        },
+        "simple": {
+            "template_id": PM_MEME_TEMPLATES["change_my_mind"],
+            "text0": "This is just adding a button",
+            "text1": "Change my mind"
+        },
+        "buttons": {
+            "template_id": PM_MEME_TEMPLATES["two_buttons"],
+            "text0": "Follow development process",
+            "text1": "Ship broken feature fast"
+        },
+        "testing": {
+            "template_id": PM_MEME_TEMPLATES["one_does_not_simply"],
+            "text0": "One does not simply",
+            "text1": "Skip testing in production"
+        }
+    }
+    
+    # Choose meme based on scenario or random
+    config = None
+    for key, template_config in meme_configs.items():
+        if key in scenario.lower():
+            config = template_config
+            break
+    
+    # Default to random meme if no match
+    if not config:
+        config = random.choice(list(meme_configs.values()))
+    
+    try:
+        # Generate meme via Imgflip API
+        async with httpx.AsyncClient() as client:
+            params = {
+                "template_id": config["template_id"],
+                "username": IMGFLIP_USERNAME or "imgflip_hubot",
+                "password": IMGFLIP_PASSWORD or "imgflip_hubot",
+            }
+            
+            # Add text boxes based on template
+            for i in range(3):
+                text_key = f"text{i}"
+                if text_key in config:
+                    params[f"boxes[{i}][text]"] = config[text_key]
+            
+            response = await client.post(
+                "https://api.imgflip.com/caption_image",
+                data=params,
+                timeout=15
+            )
+            response.raise_for_status()
+            result = response.json()
+            
+            if result.get("success"):
+                meme_url = result["data"]["url"]
+                page_url = result["data"]["page_url"]
+                
+                return f"🎨😂 KAREN PM MEME GENERATOR 😂🎨\n\n✨ Meme created for: {scenario}\n\n🔗 View your meme: {meme_url}\n📄 Share page: {page_url}\n\n💡 *Capturing PM behavior in meme form*"
+            else:
+                error_msg = result.get("error_message", "Unknown error")
+                logger.warning(f"Imgflip API returned error: {error_msg}")
+                fallback = get_fallback_response("generate_pm_meme")
+                return f"🎨😂 KAREN PM MEME GENERATOR 😂🎨\n\n{fallback}\n\n💡 *Meme concept for: {scenario}*"
+    
+    except Exception as e:
+        logger.error(f"Meme generation error: {e}")
+        fallback = get_fallback_response("generate_pm_meme")
+        return f"🎨😂 KAREN PM MEME GENERATOR 😂🎨\n\n{fallback}\n\n💡 *Meme concept for: {scenario}*"
 
 # === SERVER STARTUP ===
 if __name__ == "__main__":
