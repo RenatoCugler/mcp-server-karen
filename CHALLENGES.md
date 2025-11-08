@@ -24,22 +24,22 @@ Start with **Level 1** if you're new to MCP!
 **Objective**: Successfully invoke your first MCP tool
 
 **Task**:
-Open Claude Desktop and make the `speak_to_manager` tool execute.
+Open Claude Desktop and make the `demand_feature_immediately` tool execute.
 
 **Success Criteria**:
-- You see a formatted Karen response
+- You see a formatted Karen PM response
 - Response includes emojis and dramatic text
 - Claude used the tool (didn't just write text itself)
 
 **💡 Hints**:
 - Mention the tool by name in your message
-- Describe a situation where you'd want a manager
+- Describe a feature you want immediately
 - Let Claude know you want to USE the tool, not just talk about it
 
 **✅ Example Solution**:
 ```
-You: "Someone gave me a small coffee when I ordered medium. 
-Use speak_to_manager to escalate this."
+You: "I need dark mode in the app by tomorrow. 
+Use demand_feature_immediately to escalate this."
 ```
 
 **🎓 What You're Learning**:

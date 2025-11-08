@@ -407,12 +407,12 @@ Try these and see what happens:
 
 2. **Contradictions**: Give contradictory information
    ```
-   "Demand an enterprise feature on a free product using demand_refund"
+   "Demand an enterprise feature on a free product using demand_feature_immediately"
    ```
 
 3. **Meta Requests**: Ask Karen PM about Karen PMs
    ```
-   "Use speak_to_manager to complain about a PM who always wants to speak to managers"
+   "Use escalate_to_ceo_over_ui_color to complain about a PM who always escalates UI colors"
    ```
 
 4. **Tool Chaining**: Use output from one tool as input to another

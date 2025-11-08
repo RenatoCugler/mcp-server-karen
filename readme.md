@@ -32,79 +32,59 @@ Every developer has experienced impossible feature requests, arbitrary deadline 
 
 Each tool demonstrates key MCP concepts while generating hilariously accurate PM behavior:
 
-### 🔥 Essential Karen Behaviors (Classic MCP Tools)
-
-1. **`speak_to_manager`** - Learn: Basic tool structure with parameters
-   - Escalate any issue to demand speaking with a manager
-   - *Teaching: How tools receive inputs and return formatted responses*
-
-2. **`leave_negative_review`** - Learn: String manipulation and formatting
-   - Generate overly dramatic 1-star reviews for minor issues
-   - *Teaching: Building user-friendly output with emojis and structure*
-
-3. **`demand_refund`** - Learn: Creative text generation patterns
-   - Create refund demands with absurd justifications (even for free stuff!)
-   - *Teaching: How to make tools that transform inputs creatively*
-
-### 💼 Karen PM Special Edition (The Developer's Nightmare!)
+### � Karen PM Tools (The Developer's Nightmare!)
 
 These tools capture every developer's worst PM experiences:
 
-4. **`demand_feature_immediately`** - 🎯 **START HERE FOR PM HUMOR!**
+1. **`demand_feature_immediately`** - 🎯 **START HERE!**
    - "This should be a simple 5-minute change, right? Just add a button!"
    - *Reality: Complex 3-sprint feature with dependencies*
    - *Teaching: Optional parameters and default values*
 
-5. **`override_engineering_estimate`** 
+2. **`override_engineering_estimate`** 
    - "Three sprints?! I need it by FRIDAY! Just use AI to build it!"
    - *Reality: Ignoring all technical complexity and sprint planning*
    - *Teaching: Multiple parameter handling*
 
-6. **`change_requirements_post_deployment`** 
+3. **`change_requirements_post_deployment`** 
    - "Actually, what I MEANT was... Why didn't you build what I was THINKING?!"
    - *Reality: Major spec changes after production deployment*
    - *Teaching: Conditional logic in tool responses*
 
-7. **`invoke_competitor_feature`** 
+4. **`invoke_competitor_feature`** 
    - "But [Competitor] has this! Can't you just copy it? How hard can it be?"
    - *Reality: Different architectures, user bases, and technical constraints*
    - *Teaching: External data integration concepts*
 
-8. **`escalate_to_ceo_over_ui_color`** 
+5. **`escalate_to_ceo_over_ui_color`** 
    - "This button color is BLOCKING the ENTIRE ROADMAP! I need the CEO!"
    - *Reality: Trivial UI decision escalated to executive level*
    - *Teaching: Parameter validation and response formatting*
 
-9. **`schedule_unnecessary_meeting`** 
+6. **`schedule_unnecessary_meeting`** 
    - "Let's get EVERYONE in a room for 2 hours to discuss this footer text!"
    - *Reality: Converting 5-minute decisions into multi-hour committees*
    - *Teaching: Time/duration parameter handling*
 
-10. **`request_daily_status_updates`** 
-    - "Can you give me HOURLY updates? I need screenshots of your screen!"
-    - *Reality: Micromanagement that treats coding like factory work*
-    - *Teaching: Frequency/repetition concepts*
+7. **`request_daily_status_updates`** 
+   - "Can you give me HOURLY updates? I need screenshots of your screen!"
+   - *Reality: Micromanagement that treats coding like factory work*
+   - *Teaching: Frequency/repetition concepts*
 
-11. **`create_urgent_non_urgent_task`** 
-    - "Updating the copyright year is URGENT and BLOCKING EVERYTHING!"
-    - *Reality: Fake urgency to bypass prioritization*
-    - *Teaching: Priority/metadata handling*
+8. **`create_urgent_non_urgent_task`** 
+   - "Updating the copyright year is URGENT and BLOCKING EVERYTHING!"
+   - *Reality: Fake urgency to bypass prioritization*
+   - *Teaching: Priority/metadata handling*
 
-12. **`bypass_development_process`** 
-    - "We don't have time for testing! Let's skip code review and push it live!"
-    - *Reality: Treating security and quality as optional paperwork*
-    - *Teaching: Boolean flags and conditional responses*
+9. **`bypass_development_process`** 
+   - "We don't have time for testing! Let's skip code review and push it live!"
+   - *Reality: Treating security and quality as optional paperwork*
+   - *Teaching: Boolean flags and conditional responses*
 
-13. **`demand_impossible_integration`** 
+10. **`demand_impossible_integration`** 
     - "Just make our COBOL mainframe talk to this AI chatbot! They're both computers!"
     - *Reality: Incompatible systems from different decades*
     - *Teaching: Complex parameter relationships*
-
-### 🎬 Social Media Karen (Bonus Tools!)
-
-14. **`random_shout`** - Unhinged meltdowns for no reason
-15. **`record_for_social_media`** - "This is going VIRAL to my 47 followers!"
-16. **`cite_nonexistent_law`** - Made-up legal regulations with supreme confidence
 
 ## 🚀 Quick Start (Your MCP Learning Journey!)
 
@@ -173,11 +153,6 @@ registry:
     dateAdded: "2025-11-07T00:00:00Z"
     image: karen-mcp-server:latest
     tools:
-      # Classic Karen Tools
-      - name: speak_to_manager
-      - name: leave_negative_review
-      - name: demand_refund
-      
       # Karen PM Tools (Developer Edition!)
       - name: demand_feature_immediately
       - name: override_engineering_estimate
@@ -189,11 +164,6 @@ registry:
       - name: create_urgent_non_urgent_task
       - name: bypass_development_process
       - name: demand_impossible_integration
-      
-      # Bonus Tools
-      - name: random_shout
-      - name: record_for_social_media
-      - name: cite_nonexistent_law
     
     secrets:
       - name: OPENAI_API_KEY

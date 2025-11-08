@@ -369,12 +369,12 @@ return "Success. Result is: " + result + ". Completed."
 
 | MCP Concept | Karen Tool Example | What You Learn |
 |-------------|-------------------|----------------|
-| **Basic Tool** | `speak_to_manager` | How to create tools |
+| **Basic Tool** | `demand_feature_immediately` | How to create tools |
 | **Parameters** | `feature=""`, `deadline=""` | Optional vs required |
 | **Return Values** | Formatted text with emojis | Response formatting |
 | **External APIs** | OpenAI integration | API calls in tools |
 | **Fallbacks** | Pre-written responses | Error handling |
-| **Multiple Tools** | 16 different tools | Tool organization |
+| **Multiple Tools** | 10 different PM tools | Tool organization |
 | **Tool Selection** | AI picks right tool | How AI chooses |
 | **Edge Cases** | Empty parameters | Input validation |
 

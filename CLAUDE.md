@@ -2,7 +2,7 @@
 
 ## Overview
 
-This MCP server provides humorous "Karen" behavior tools that generate over-the-top customer complaint responses. It integrates with OpenAI's API for dynamic response generation while maintaining fallback functionality for when the API is unavailable.
+This MCP server provides humorous "Karen PM" behavior tools that generate over-the-top Product Manager responses. It integrates with OpenAI's API for dynamic response generation while maintaining fallback functionality for when the API is unavailable.
 
 ## Architecture
 
@@ -31,57 +31,57 @@ This MCP server provides humorous "Karen" behavior tools that generate over-the-
 
 ## Implementation Details
 
-### Tools Provided
+### PM Tools Provided
 
-1. **speak_to_manager** - Escalates any issue dramatically
-   - Parameters: `issue` (string), `severity` (string)
-   - Generates manager escalation demands
-   - Uses OpenAI with Karen personality prompt
+1. **demand_feature_immediately** - Demand features with impossible deadlines
+   - Parameters: `feature` (string), `deadline` (string)
+   - Generates urgent feature demands
+   - Ignores technical complexity
 
-2. **leave_negative_review** - Creates 1-star reviews
-   - Parameters: `business` (string), `experience` (string)
-   - Generates overly dramatic review content
-   - Includes social media posting threats
+2. **override_engineering_estimate** - Dismiss technical estimates
+   - Parameters: `task` (string), `estimate` (string), `actual_time` (string)
+   - Rewrites realistic estimates with wishful thinking
+   - Claims "it should be simple"
 
-3. **demand_refund** - Creates refund demands
-   - Parameters: `item` (string), `reason` (string)
-   - Generates creative refund justifications
-   - Includes legal action threats
+3. **change_requirements_post_deployment** - Change scope after release
+   - Parameters: `original_requirement` (string), `new_requirement` (string)
+   - Demands changes to deployed features
+   - Acts surprised about consequences
 
-4. **correct_pronunciation** - Pedantic pronunciation corrections
-   - Parameters: `word` (string)
-   - Provides condescending "corrections"
-   - Claims false authority
+4. **invoke_competitor_feature** - Reference competitor features
+   - Parameters: `competitor` (string), `feature` (string)
+   - Uses "but competitor X has this" argument
+   - Ignores different contexts
 
-5. **cite_company_policy** - Fake policy citations
-   - Parameters: `request` (string)
-   - Uses pre-defined fake policies
-   - Generates supporting arguments
+5. **escalate_to_ceo_over_ui_color** - Escalate trivial issues
+   - Parameters: `ui_element` (string), `color_complaint` (string)
+   - Treats minor UI issues as critical
+   - Threatens executive involvement
 
-6. **escalate_complaint** - Major complaint escalation
-   - Parameters: `issue` (string), `department` (string)
-   - Transforms minor issues into major complaints
-   - Threatens corporate involvement
+6. **schedule_unnecessary_meeting** - Create pointless meetings
+   - Parameters: `topic` (string), `attendees` (string)
+   - Schedules meetings that could be emails
+   - Requires all developers present
 
-7. **generate_complaint_letter** - Formal complaint letters
-   - Parameters: `recipient` (string), `subject` (string)
-   - Creates business-style complaint letters
-   - Includes dramatic Karen language
+7. **request_daily_status_updates** - Demand excessive reporting
+   - Parameters: `project` (string), `update_frequency` (string)
+   - Requires constant status updates
+   - Interrupts actual work
 
-8. **random_shout** - Unreasonable meltdowns
-   - Parameters: `target` (string), `location` (string)
-   - Generates completely unjustified rage
-   - Pure Karen entitlement for no reason
+8. **create_urgent_non_urgent_task** - False urgency creation
+   - Parameters: `task` (string), `fake_urgency_reason` (string)
+   - Marks everything as urgent
+   - Cries wolf constantly
 
-9. **record_for_social_media** - Social media threats
-   - Parameters: `situation` (string), `platform` (string)
-   - Announces recording for social media
-   - Threatens to make things "viral" to 47 followers
+9. **bypass_development_process** - Skip necessary steps
+   - Parameters: `process` (string), `reason_to_skip` (string)
+   - Demands to skip testing, code review, etc.
+   - Claims "we don't have time"
 
-10. **cite_nonexistent_law** - Fake legal citations
-    - Parameters: `issue` (string), `legal_area` (string)
-    - Makes up completely fabricated laws
-    - Confidently misquotes regulations that don't exist
+10. **demand_impossible_integration** - Request unfeasible integrations
+    - Parameters: `system_a` (string), `system_b` (string)
+    - Demands integration of incompatible systems
+    - Ignores technical limitations
 
 ### Key Design Decisions
 
@@ -121,38 +121,30 @@ return f"🔥 KAREN MODE ACTIVATED 🔥\n\n{ai_response}\n\n📞 *Demanding to b
 
 #### 4. Fallback Response System
 
-Pre-defined response arrays for each tool type:
+Pre-defined response arrays for each PM tool type:
 
 ```python
 FALLBACK_RESPONSES = {
-    "speak_to_manager": [
-        "This is ABSOLUTELY UNACCEPTABLE! I demand to speak to your manager RIGHT NOW!",
-        "I have been a loyal customer for YEARS and this is how you treat me? GET ME YOUR MANAGER!",
-        "Excuse me? Do you know who I am? I need to speak to someone in charge IMMEDIATELY!"
+    "demand_feature": [
+        "I don't care if it takes 6 months to build properly - we need this feature by FRIDAY!",
+        "Our competitor has this feature and we're losing customers! Make it happen NOW!",
+        "This is a CRITICAL blocker! Drop everything else and prioritize this IMMEDIATELY!"
     ],
-    # ... more categories
+    # ... more PM categories
 }
 ```
 
-#### 5. Fake Policy Generation
+#### 5. No Fake Policy Generation
 
-Randomized fake policies for the `cite_company_policy` tool:
-
-```python
-FAKE_POLICIES = [
-    "According to Section 4.7 of the Customer Service Charter, all complaints must be escalated within 2 minutes.",
-    "Corporate Policy 12-B clearly states that customers are entitled to speak with senior management upon request.",
-    # ... more policies
-]
-```
+The PM edition focuses on product management behaviors without fake policies.
 
 ### OpenAI API Configuration
 
 #### Request Parameters
 
 - **Model**: Configurable via `OPENAI_MODEL` (default: gpt-3.5-turbo)
-- **Temperature**: 0.8 (high creativity for varied Karen responses)
-- **Max Tokens**: 300 (sufficient for complaint rants)
+- **Temperature**: 0.8 (high creativity for varied PM responses)
+- **Max Tokens**: 300 (sufficient for PM demands)
 - **Timeout**: 30 seconds
 
 #### Error Handling
@@ -187,7 +179,7 @@ docker run -i --rm karen-mcp-server:latest
 # Full MCP test
 (echo '{"jsonrpc":"2.0","method":"initialize","params":{"protocolVersion":"2024-11-05","capabilities":{},"clientInfo":{"name":"test","version":"1.0.0"}},"id":1}' && \
  echo '{"jsonrpc":"2.0","method":"notifications/initialized","params":{}}' && \
- echo '{"jsonrpc":"2.0","method":"tools/call","params":{"name":"speak_to_manager","arguments":{"issue":"slow website","severity":"minor"}},"id":3}') | \
+ echo '{"jsonrpc":"2.0","method":"tools/call","params":{"name":"demand_feature_immediately","arguments":{"feature":"dark mode","deadline":"tomorrow"}},"id":3}') | \
 docker run -i --rm -e OPENAI_API_KEY="$OPENAI_API_KEY" karen-mcp-server:latest
 ```
 
